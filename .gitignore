@@ -1,0 +1,6 @@
+# FOLDERS
+.vscode/
+node_modules/
+
+# ETC
+*.env

@@ -1,0 +1,23 @@
+{
+	"name": "stories-scrapper",
+	"version": "0.0.0",
+	"description": "A scrapper REST API that scrapes stories data from sources like Wattpad or Ao3",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"type": "module",
+	"keywords": [],
+	"author": "Reyhan Ardiya",
+	"license": "MIT",
+	"dependencies": {
+		"eslint": "^8.10.0",
+		"express": "^4.17.3",
+		"mongoose": "^6.2.4",
+		"puppeteer": "^13.4.1",
+		"random-useragent": "^0.5.0"
+	},
+	"devDependencies": {
+		"eslint-plugin-jsdoc": "^37.9.6"
+	}
+}
