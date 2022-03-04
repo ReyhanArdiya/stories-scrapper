@@ -4,7 +4,8 @@
 	"description": "A scrapper REST API that scrapes stories data from sources like Wattpad or Ao3",
 	"main": "src/app.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"start": "nodemon src/app.js"
 	},
 	"type": "module",
 	"keywords": [],
