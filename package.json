@@ -2,7 +2,7 @@
 	"name": "stories-scrapper",
 	"version": "0.0.0",
 	"description": "A scrapper REST API that scrapes stories data from sources like Wattpad or Ao3",
-	"main": "app.js",
+	"main": "src/app.js",
 	"scripts": {
 		"test": "echo \"Error: no test specified\" && exit 1"
 	},
