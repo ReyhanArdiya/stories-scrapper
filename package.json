@@ -12,7 +12,6 @@
 	"author": "Reyhan Ardiya",
 	"license": "MIT",
 	"dependencies": {
-		"eslint": "^8.10.0",
 		"express": "^4.17.3",
 		"mongoose": "^6.2.4",
 		"puppeteer": "^13.4.1",
@@ -20,6 +19,7 @@
 	},
 	"devDependencies": {
 		"dotenv": "^16.0.0",
+		"eslint": "^8.10.0",
 		"eslint-plugin-jsdoc": "^37.9.6"
 	}
 }
