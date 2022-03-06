@@ -10,7 +10,7 @@ const StorySchema = new mongoose.Schema({
 		type     : String
 	},
 	published : {
-		required : true,
+		required : false,
 		type     : Date
 	},
 	source : {
