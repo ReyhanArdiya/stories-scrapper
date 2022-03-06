@@ -49,7 +49,9 @@ const scrapeStories = async (page, ...tags) => {
 	const isPageNotFound = await page.$eval("h1", h1 => h1.innerText.includes("missing"));
 
 	if (isPageNotFound) {
-		throw new Error("Page not found! Check your tags!");
+		const err = new Error("Stories page not found! Check your tags!");
+		err.name = "StoriesPageNotFound";
+		throw err;
 	} else {
 		return await page.evaluate(() => {
 	        // Only get 10 story items from DOM
