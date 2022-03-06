@@ -85,6 +85,6 @@ const scrapeStories = async (page, ...tags) => {
 	}
 };
 
-const WattpadScrapper = { scrapeStories };
+const wattpadScrapper = { scrapeStories };
 
-export default WattpadScrapper;
+export default wattpadScrapper;
