@@ -4,8 +4,8 @@ import puppeteer from "puppeteer";
 
 // DBG
 const browser = await puppeteer.launch({
-	devtools : true,
-	headless : false,
+	// devtools : true,
+	// headless : false,
 });
 const page = await newPageRandomUA(browser);
 
@@ -32,44 +32,53 @@ const page = await newPageRandomUA(browser);
  * ```
  */
 const scrapeStories = async (page, ...tags) => {
-	// TODO add early return if page not found
 	tags = tags.join("%2C");
 	await page.goto(`https://www.wattpad.com/stories/${tags}`, { timeout : 60_000 });
 
-	return await page.evaluate(() => {
+	const isPageNotFound = await page.$eval("h1", h1 => h1.innerText.includes("missing"));
+
+	if (isPageNotFound) {
+		throw new Error("Page not found! Check your tags!");
+	} else {
+		return await page.evaluate(() => {
 	    // Only get 10 story items from DOM
 		// eslint-disable-next-line no-undef
-		const storyItems = [ ...document.querySelectorAll(".browse-story-item") ].slice(0, 10);
+			const storyItems = [ ...document.querySelectorAll(".browse-story-item") ].slice(0, 10);
 
-		const storyData = [];
-		for (const storyItem of storyItems) {
+			const storyData = [];
+			for (const storyItem of storyItems) {
 		    // Get the storyItem's data
-			const cover = storyItem.querySelector(".item img")?.src;
-			const link = storyItem.querySelector(".content > a.title")?.href;
-			const title = storyItem.querySelector(".content > a.title")?.innerText;
-			let author = storyItem.querySelector(".content > .username")?.innerText;
-			let reads = storyItem.querySelector(".read-count")?.innerText;
-			let votes = storyItem.querySelector(".vote-count")?.innerText;
+				const cover = storyItem.querySelector(".item img")?.src;
+				const link = storyItem.querySelector(".content > a.title")?.href;
+				const title = storyItem.querySelector(".content > a.title")?.innerText;
+				let author = storyItem.querySelector(".content > .username")?.innerText;
+				let reads = storyItem.querySelector(".read-count")?.innerText;
+				let votes = storyItem.querySelector(".vote-count")?.innerText;
 
-			// Remove "by" from author string
-			author = author.slice(3);
+				// Remove "by" from author string
+				author = author.slice(3);
 
-			// Turn reads and votes into numbers
-			reads = reads.endsWith("K") ? parseInt(reads) + 1000 : parseInt(reads);
-			votes = votes.endsWith("K") ? parseInt(votes) + 1000 : parseInt(votes);
+				// Turn reads and votes into numbers
+				reads = reads.endsWith("K") ? parseInt(reads) + 1000 : parseInt(reads);
+				votes = votes.endsWith("K") ? parseInt(votes) + 1000 : parseInt(votes);
 
-			storyData.push({
-				author,
-				cover,
-				link,
-				reads,
-				title,
-				votes
-			});
-		}
+				storyData.push({
+					author,
+					cover,
+					link,
+					reads,
+					title,
+					votes
+				});
+			}
 
-		return storyData;
-	});
+			return storyData;
+		});
+	}
 };
 
-console.log(await scrapeStories(page, "top"));
+console.log(await scrapeStories(page, "top", "hahaha", "fiejfeiujui"));
+
+const WattpadScrapper = { scrapeStories };
+
+export default WattpadScrapper;
