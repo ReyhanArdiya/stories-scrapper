@@ -18,8 +18,10 @@ const sendScrapedStories = async (req, res, next) => {
 			res.json(scrapedStories);
 
 			// Save the stories to DB for future use
-			WattpadStory.insertMany(scrapedStories)
-				         .catch(err => console.error(err));
+			for (const story of scrapedStories) {
+				const wattpadStory = new WattpadStory(story);
+				wattpadStory.save().catch(err => console.error(err));
+			}
 		} catch (err) {
 			next(err);
 		}
@@ -29,4 +31,3 @@ const sendScrapedStories = async (req, res, next) => {
 const wattpadHandler = { sendScrapedStories };
 
 export default wattpadHandler;
-// GET http://localhost:9000/wattpad/stories?tags=popular
