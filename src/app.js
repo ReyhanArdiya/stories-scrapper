@@ -1,9 +1,13 @@
 import "dotenv/config";
 import express from "express";
 import mongoose from "mongoose";
+import newPageRandomUA from "./utils/puppeteer-page-randomUA.js";
+import puppeteer from "puppeteer";
+import wattpadRouter from "./routers/wattpad.js";
 
 const port = process.env.PORT;
 const app = express();
+const browser = await puppeteer.launch();
 
 // Connect to MongoDB
 const mongoDatabase = process.env.MONGODB_URL;
@@ -15,6 +19,7 @@ try {
 }
 
 // Express Setup Middlewares
+// Logger
 app.use((req, res, next) => {
 	console.log(
 		"🌟 You got a new request! ( *≧◡≦)~💌 \\(￣▽￣* )ゞ 🌟",
@@ -22,6 +27,16 @@ app.use((req, res, next) => {
 			.toLocaleString()} ⌚`
 	);
 	next();
+});
+
+// Add req.page for scrappers
+app.use(async (req, res, next) => {
+	try {
+		req.page = await newPageRandomUA(browser);
+		next();
+	} catch (err) {
+		next(err);
+	}
 });
 
 // Routes
