@@ -1,3 +1,4 @@
+import WattpadStory from "../../models/wattpad.js";
 import wattpadScrapper from "../scrappers/wattpad.js";
 
 const sendScrapedStories = async (req, res, next) => {
@@ -10,10 +11,15 @@ const sendScrapedStories = async (req, res, next) => {
 		tags = tags.split(",").map(tag => tag.trim());
 
 		try {
-			res.json(await wattpadScrapper.scrapeStories(
+			const scrapedStories = await wattpadScrapper.scrapeStories(
 				req.page,
 				...tags
-			));
+			);
+			res.json(scrapedStories);
+
+			// Save the stories to DB for future use
+			WattpadStory.insertMany(scrapedStories)
+				         .catch(err => console.error(err));
 		} catch (err) {
 			next(err);
 		}
@@ -23,3 +29,4 @@ const sendScrapedStories = async (req, res, next) => {
 const wattpadHandler = { sendScrapedStories };
 
 export default wattpadHandler;
+// GET http://localhost:9000/wattpad/stories?tags=popular
