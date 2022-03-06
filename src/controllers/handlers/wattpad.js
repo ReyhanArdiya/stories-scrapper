@@ -1,4 +1,4 @@
-import wattpadScrapper from "../scrappers/wattpad-scrapper.js";
+import wattpadScrapper from "../scrappers/wattpad.js";
 
 const sendScrapedStories = async (req, res, next) => {
 	let { tags } = req.query;
