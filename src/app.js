@@ -40,5 +40,6 @@ app.use(async (req, res, next) => {
 });
 
 // Routes
+app.use("/wattpad", wattpadRouter);
 
 app.listen(port, () => console.log(`Listening on 🚢 ${port} (●'◡'●)`));
