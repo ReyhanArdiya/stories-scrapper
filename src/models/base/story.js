@@ -10,7 +10,7 @@ const StorySchema = new mongoose.Schema({
 		type     : String
 	},
 	published : {
-		required : true,
+		required : false,
 		type     : Date
 	},
 	source : {
@@ -23,6 +23,12 @@ const StorySchema = new mongoose.Schema({
 		type     : String
 	}
 }, { strict : "throw" });
+
+// Prevent saving the same story from the same source
+StorySchema.index({
+	source : 1,
+	title  : 1
+}, { unique : true });
 
 // This will be used as a discriminator for other story models to extend from
 const Story = mongoose.model("Story", StorySchema);
