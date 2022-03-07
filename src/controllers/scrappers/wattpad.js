@@ -71,8 +71,8 @@ const scrapeStories = async (page, ...tags) => {
 				author = author.slice(3);
 
 				// Turn reads and votes into numbers
-				reads = reads.endsWith("K") ? parseInt(reads) + 1000 : parseInt(reads);
-				votes = votes.endsWith("K") ? parseInt(votes) + 1000 : parseInt(votes);
+				reads = reads.endsWith("K") ? parseInt(reads) * 1000 : parseInt(reads);
+				votes = votes.endsWith("K") ? parseInt(votes) * 1000 : parseInt(votes);
 
 				return {
 					author,
