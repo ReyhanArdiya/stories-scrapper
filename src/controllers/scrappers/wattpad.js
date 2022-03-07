@@ -55,8 +55,11 @@ const scrapeStories = async (page, ...tags) => {
 	} else {
 		return await page.evaluate(() => {
 	        // Only get 10 story items from DOM
-		    // eslint-disable-next-line no-undef
-			const storyItems = [ ...document.querySelectorAll(".browse-story-item") ].slice(0, 10);
+			const storyItems = [];
+			for (let i = 1; i <= 10; i++) {
+				// eslint-disable-next-line no-undef
+				storyItems.push(document.querySelector(`.browse-story-item:nth-of-type(${i})`));
+			}
 
 			// Get every storyItem's data
 			return storyItems.map(storyItem => {
