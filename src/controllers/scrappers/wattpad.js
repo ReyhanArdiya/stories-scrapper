@@ -56,7 +56,13 @@ const scrapeStories = async (page, ...tags) => {
 		const storyItems = [];
 		for (let i = 1; i <= 10; i++) {
 			// eslint-disable-next-line no-undef
-			storyItems.push(document.querySelector(`.browse-story-item:nth-of-type(${i})`));
+			const story = document.querySelector(`.browse-story-item:nth-of-type(${i})`);
+			if (story) {
+				storyItems.push(story);
+			} else {
+				// There is a possibility that a page doesn't have 10 stories, so we break early
+				break;
+			}
 		}
 
 		// Get every storyItem's data
