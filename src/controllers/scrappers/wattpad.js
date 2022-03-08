@@ -45,13 +45,13 @@ import { NoStoryError } from "../../utils/error-classes.js";
  */
 const scrapeStories = async (page, ...tags) => {
 	// URL encode the commas
-	tags = tags.join("%2C");
-	await page.goto(`https://www.wattpad.com/stories/${tags}`, { timeout : 60_000 });
+	const link = `https://www.wattpad.com/stories/${tags.join("%2C")}`;
+	await page.goto(link, { timeout : 60_000 });
 
 	const isPageNotFound = await page.$eval("h1", h1 => h1.innerText.includes("missing"));
 
 	if (isPageNotFound) {
-		throw new NoStoryError("Stories page not found! Check your tags!");
+		throw new NoStoryError("Stories page not found! Check your tags!", link);
 	} else {
 		return await page.evaluate(() => {
 	        // Only get 10 story items from DOM

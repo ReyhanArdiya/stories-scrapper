@@ -47,10 +47,10 @@ import { NoStoryError } from "../../utils/error-classes.js";
  */
 const scrapeTags = async (page, ...tags) => {
 	// URL encode the spaces
-	tags = tags.join("%20");
-	await page.goto(`https://archiveofourown.org/tags/${tags}`, { timeout : 60_000 });
-	const isPageNotFound = await page.$eval("#main h2.heading", h => h.innerText.includes("404"));
+	const link = `https://archiveofourown.org/tags/${tags.join("%20")}`;
+	await page.goto(link, { timeout : 60_000 });
 
+	const isPageNotFound = await page.$eval("#main h2.heading", h => h.innerText.includes("404"));
 	// Sometimes using a tag would not show a stories list page
 	let isThereNoStory;
 	try {
@@ -60,7 +60,10 @@ const scrapeTags = async (page, ...tags) => {
 	}
 
 	if (isPageNotFound || isThereNoStory) {
-		throw new NoStoryError("Stories page not found! Check your tags or make your tags more specific!");
+		throw new NoStoryError(
+			"Stories page not found! Check your tags or make your tags more specific!",
+			link
+		);
 	} else {
 		return await page.evaluate(() => {
 			// Only get 10 story items from DOM
