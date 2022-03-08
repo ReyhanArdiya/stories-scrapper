@@ -85,35 +85,34 @@ const scrapeTags = async (page, ...tags) => {
 			"Stories page not found! Check your tags or make your tags more specific!",
 			link
 		);
-	} else {
-		const storyPattern = storySelectors[storyType];
-		return await page.evaluate(
-			storyPattern => {
-				// Only get 10 story items from DOM
-				const storyItems = [];
-				for (let i = 1; i <= 10; i++) {
-					const story = document.querySelector(`${storyPattern}:nth-of-type(${i})`);
-					if (story) {
-						storyItems.push(story);
-					} else {
-						// There is a possibility that a page doesn't have 10 stories, so we break early
-						break;
-					}
-				}
-
-				// Get every storyItem's data
-				return storyItems.map(storyItem => ({
-					author    : storyItem?.querySelector("h4 a:last-of-type")?.innerText,
-					bookmarks : +storyItem?.querySelector("dd.bookmarks")?.innerText,
-					hits      : +storyItem?.querySelector("dd.hits")?.innerText,
-					kudos     : +storyItem?.querySelector("dd.kudos")?.innerText,
-					link      : storyItem?.querySelector("h4 a:first-of-type")?.href,
-					title     : storyItem?.querySelector("h4 a:first-of-type")?.innerText
-				}));
-			},
-			storyPattern
-		);
 	}
+
+	const storyPattern = storySelectors[storyType];
+	return await page.evaluate(
+		storyPattern => {
+			const storyItems = [];
+			for (let i = 1; i <= 10; i++) {
+				const story = document.querySelector(`${storyPattern}:nth-of-type(${i})`);
+				if (story) {
+					storyItems.push(story);
+				} else {
+					// There is a possibility that a page doesn't have 10 stories, so we break early
+					break;
+				}
+			}
+
+			// Get every storyItem's data
+			return storyItems.map(storyItem => ({
+				author    : storyItem?.querySelector("h4 a:last-of-type")?.innerText,
+				bookmarks : +storyItem?.querySelector("dd.bookmarks")?.innerText,
+				hits      : +storyItem?.querySelector("dd.hits")?.innerText,
+				kudos     : +storyItem?.querySelector("dd.kudos")?.innerText,
+				link      : storyItem?.querySelector("h4 a:first-of-type")?.href,
+				title     : storyItem?.querySelector("h4 a:first-of-type")?.innerText
+			}));
+		},
+		storyPattern
+	);
 	/*  eslint-enable no-undef */
 };
 

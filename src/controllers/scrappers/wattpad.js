@@ -48,46 +48,44 @@ const scrapeStories = async (page, ...tags) => {
 	const link = `https://www.wattpad.com/stories/${tags.join("%2C")}`;
 	await page.goto(link, { timeout : 60_000 });
 
-	const isPageNotFound = await page.$eval("h1", h1 => h1.innerText.includes("missing"));
-
-	if (isPageNotFound) {
+	if (await page.$eval("h1", h1 => h1.innerText.includes("missing"))) {
 		throw new NoStoryError("Stories page not found! Check your tags!", link);
-	} else {
-		return await page.evaluate(() => {
-	        // Only get 10 story items from DOM
-			const storyItems = [];
-			for (let i = 1; i <= 10; i++) {
-				// eslint-disable-next-line no-undef
-				storyItems.push(document.querySelector(`.browse-story-item:nth-of-type(${i})`));
-			}
-
-			// Get every storyItem's data
-			return storyItems.map(storyItem => {
-				const cover = storyItem.querySelector(".item img")?.src;
-				const link = storyItem.querySelector(".content > a.title")?.href;
-				const title = storyItem.querySelector(".content > a.title")?.innerText;
-				let author = storyItem.querySelector(".content > .username")?.innerText;
-				let reads = storyItem.querySelector(".read-count")?.innerText;
-				let votes = storyItem.querySelector(".vote-count")?.innerText;
-
-				// Remove "by" from author string
-				author = author.slice(3);
-
-				// Turn reads and votes into numbers
-				reads = reads.endsWith("K") ? parseInt(reads) * 1000 : parseInt(reads);
-				votes = votes.endsWith("K") ? parseInt(votes) * 1000 : parseInt(votes);
-
-				return {
-					author,
-					cover,
-					link,
-					reads,
-					title,
-					votes
-				};
-			});
-		});
 	}
+
+	return await page.evaluate(() => {
+		const storyItems = [];
+		for (let i = 1; i <= 10; i++) {
+			// eslint-disable-next-line no-undef
+			storyItems.push(document.querySelector(`.browse-story-item:nth-of-type(${i})`));
+		}
+
+		// Get every storyItem's data
+		return storyItems.map(storyItem => {
+			const cover = storyItem.querySelector(".item img")?.src;
+			const link = storyItem.querySelector(".content > a.title")?.href;
+			const title = storyItem.querySelector(".content > a.title")?.innerText;
+			let author = storyItem.querySelector(".content > .username")?.innerText;
+			let reads = storyItem.querySelector(".read-count")?.innerText;
+			let votes = storyItem.querySelector(".vote-count")?.innerText;
+
+			// Remove "by" from author string
+			author = author.slice(3);
+
+			// Turn reads and votes into numbers
+			reads = reads.endsWith("K") ? parseInt(reads) * 1000 : parseInt(reads);
+			votes = votes.endsWith("K") ? parseInt(votes) * 1000 : parseInt(votes);
+
+			return {
+				author,
+				cover,
+				link,
+				reads,
+				title,
+				votes
+			};
+		});
+	});
+
 };
 
 const wattpadScrapper = { scrapeStories };
