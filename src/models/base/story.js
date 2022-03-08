@@ -16,6 +16,7 @@ const StorySchema = new mongoose.Schema({
 	source : {
 		enum      : [ "wattpad", "ao3" ],
 		lowercase : true,
+		required  : true,
 		type      : String
 	},
 	title : {
