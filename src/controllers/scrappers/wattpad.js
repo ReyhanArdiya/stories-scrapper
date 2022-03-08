@@ -1,3 +1,5 @@
+import { NoStoryError } from "../../utils/error-classes.js";
+
 /**
  * Wattpad's story item data.
  *
@@ -49,9 +51,7 @@ const scrapeStories = async (page, ...tags) => {
 	const isPageNotFound = await page.$eval("h1", h1 => h1.innerText.includes("missing"));
 
 	if (isPageNotFound) {
-		const err = new Error("Stories page not found! Check your tags!");
-		err.name = "StoriesPageNotFound";
-		throw err;
+		throw new NoStoryError("Stories page not found! Check your tags!");
 	} else {
 		return await page.evaluate(() => {
 	        // Only get 10 story items from DOM
