@@ -4,7 +4,9 @@ export const handleNoEndpointFound = (req, res) => {
 };
 
 export const handleAnyError = (err, req, res, next) => {
-	res.status(err.status).json(err.message);
+	const { status = 500 } = err;
+
+	res.status(status).json(status !== 500 ? err : "Something went wrong!");
 };
 
 // CMT use this approach when you want each error type to be handled differently
