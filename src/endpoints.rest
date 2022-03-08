@@ -1,0 +1,17 @@
+# Variables
+@hostname = http://localhost
+@port = 9000
+@host = {{hostname}}:{{port}}
+
+# /wattpad
+@wattpad = {{host}}/wattpad
+
+GET {{wattpad}}/stories?tags=popular
+###
+
+# /ao3
+@ao3 = {{host}}/ao3
+
+GET {{ao3}}/tags?tags=top,stories
+GET {{ao3}}/tags?tags=top,stories,meow,meowmffwefiowejf
+###
