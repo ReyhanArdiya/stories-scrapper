@@ -1,3 +1,5 @@
+import { NoStoryError } from "../../utils/error-classes.js";
+
 /**
  * Ao3's story item data.
  *
@@ -58,10 +60,7 @@ const scrapeTags = async (page, ...tags) => {
 	}
 
 	if (isPageNotFound || isThereNoStory) {
-		// TODO the error here and the one in wattpad is similiar, could reuse it thru class me thinks
-		const err = new Error("Stories page not found! Check your tags or make your tags more specific!");
-		err.name = "StoriesPageNotFound";
-		throw err;
+		throw new NoStoryError("Stories page not found! Check your tags or make your tags more specific!");
 	} else {
 		return await page.evaluate(() => {
 			// Only get 10 story items from DOM

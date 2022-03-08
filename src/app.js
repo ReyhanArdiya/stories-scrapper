@@ -5,6 +5,7 @@ import mongoose from "mongoose";
 import newPageRandomUA from "./utils/puppeteer-page-randomUA.js";
 import puppeteer from "puppeteer";
 import wattpadRouter from "./routers/wattpad.js";
+import { handleAnyError, handleNoEndpointFound } from "./controllers/handlers/error.js";
 
 const port = process.env.PORT;
 const app = express();
@@ -43,5 +44,12 @@ app.use(async (req, res, next) => {
 // Routes
 app.use("/wattpad", wattpadRouter);
 app.use("/ao3", ao3Router);
+
+// Error handlers
+app.use(
+	handleNoEndpointFound,
+	handleAnyError
+);
+
 
 app.listen(port, () => console.log(`Listening on 🚢 ${port} (●'◡'●)`));
