@@ -47,12 +47,19 @@ const scrapeTags = async (page, ...tags) => {
 	// URL encode the spaces
 	tags = tags.join("%20");
 	await page.goto(`https://archiveofourown.org/tags/${tags}`, { timeout : 60_000 });
-
 	const isPageNotFound = await page.$eval("#main h2.heading", h => h.innerText.includes("404"));
 
-	if (isPageNotFound) {
+	// Sometimes using a tag would not show a stories list page
+	let isThereNoStory;
+	try {
+		await page.waitForSelector("li[id^=\"work\"]", { timeout : 500 });
+	} catch (err) {
+		isThereNoStory = true;
+	}
+
+	if (isPageNotFound || isThereNoStory) {
 		// TODO the error here and the one in wattpad is similiar, could reuse it thru class me thinks
-		const err = new Error("Stories page not found! Check your tags!");
+		const err = new Error("Stories page not found! Check your tags or make your tags more specific!");
 		err.name = "StoriesPageNotFound";
 		throw err;
 	} else {
@@ -66,13 +73,12 @@ const scrapeTags = async (page, ...tags) => {
 
 			// Get every storyItem's data
 			return storyItems.map(storyItem => ({
-				author    : storyItem.querySelector("h4 a:last-of-type")?.innerText,
-				// CMT some stories doesn't have a bookmark
-				bookmarks : +storyItem.querySelector("dd.bookmarks")?.innerText,
-				hits      : +storyItem.querySelector("dd.hits")?.innerText,
-				kudos     : +storyItem.querySelector("dd.kudos")?.innerText,
-				link      : storyItem.querySelector("h4 a:first-of-type")?.href,
-				title     : storyItem.querySelector("h4 a:first-of-type")?.innerText
+				author    : storyItem?.querySelector("h4 a:last-of-type")?.innerText,
+				bookmarks : +storyItem?.querySelector("dd.bookmarks")?.innerText,
+				hits      : +storyItem?.querySelector("dd.hits")?.innerText,
+				kudos     : +storyItem?.querySelector("dd.kudos")?.innerText,
+				link      : storyItem?.querySelector("h4 a:first-of-type")?.href,
+				title     : storyItem?.querySelector("h4 a:first-of-type")?.innerText
 			}));
 		});
 	}
