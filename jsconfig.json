@@ -4,6 +4,6 @@
 		"target": "ESNext",
 		"allowJs": true
 	},
-	// "exclude": ["node_modules", "**/node_modules/*"],
-	"include": ["node_modules/puppeteer"]
+	"exclude": ["node_modules", "**/node_modules/*"],
+	"include": ["node_modules/puppeteer", "src/*"]
 }
