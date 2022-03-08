@@ -1,4 +1,5 @@
 import "dotenv/config";
+import ao3Router from "./routers/ao3.js";
 import express from "express";
 import mongoose from "mongoose";
 import newPageRandomUA from "./utils/puppeteer-page-randomUA.js";
@@ -41,5 +42,6 @@ app.use(async (req, res, next) => {
 
 // Routes
 app.use("/wattpad", wattpadRouter);
+app.use("/ao3", ao3Router);
 
 app.listen(port, () => console.log(`Listening on 🚢 ${port} (●'◡'●)`));

@@ -1,7 +1,7 @@
-import WattpadStory from "../../models/wattpad.js";
-import wattpadScrapper from "../scrappers/wattpad.js";
+import Ao3Story from "../../models/ao3.js";
+import ao3Scrapper from "../scrappers/ao3.js";
 
-const sendScrapedStories = async (req, res, next) => {
+const sendScrapedTags = async (req, res, next) => {
 	let { tags } = req.query;
 
 	if (!tags) {
@@ -11,7 +11,7 @@ const sendScrapedStories = async (req, res, next) => {
 		tags = tags.split(",").map(tag => tag.trim());
 
 		try {
-			const scrapedStories = await wattpadScrapper.scrapeStories(
+			const scrapedStories = await ao3Scrapper.scrapeTags(
 				req.page,
 				...tags
 			);
@@ -19,8 +19,8 @@ const sendScrapedStories = async (req, res, next) => {
 
 			// Save the stories to DB for future use
 			for (const story of scrapedStories) {
-				const wattpadStory = new WattpadStory(story);
-				wattpadStory.save().catch(err => console.error(err));
+				const ao3Story = new Ao3Story(story);
+				ao3Story.save().catch(err => console.error(err));
 			}
 		} catch (err) {
 			next(err);
@@ -29,6 +29,6 @@ const sendScrapedStories = async (req, res, next) => {
 	}
 };
 
-const wattpadHandler = { sendScrapedStories };
+const ao3Handler = { sendScrapedTags };
 
-export default wattpadHandler;
+export default ao3Handler;

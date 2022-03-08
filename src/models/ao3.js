@@ -5,6 +5,10 @@ const Ao3Schema = new mongoose.Schema({
 	bookmarks : { type : Number },
 	hits      : { type : Number },
 	kudos     : { type : Number },
+	source    : {
+		default : "ao3",
+		type    : String
+	},
 }, { strict : "throw" });
 
 const Ao3Story = Story.discriminator("Ao3", Ao3Schema);
