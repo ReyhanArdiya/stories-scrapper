@@ -28,6 +28,10 @@ MONGODB_URL=mongodb://localhost:27017/StoriesScrapperDB
 
 You can use this API from the hosted version in heroku.
 
+```http
+https://stories-scrapper.herokuapp.com/
+```
+
 # Endpoints
 
 There are 2 scrappers available: Wattpad and Ao3, which scrapes list of stories.
