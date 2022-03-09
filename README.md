@@ -172,3 +172,8 @@ GET /ao3/tags?tags=top,stories
 	// ...Up to 10 stories
 ];
 ```
+
+# Planned Features
+
+-   [ ] Single story search
+-   [ ] Query from database
