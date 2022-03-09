@@ -1,4 +1,4 @@
-if (process.env.ENVIRONMENT !== "production") {
+if (process.env.NODE_ENV !== "production") {
 	await import("dotenv/config");
 }
 import ao3Router from "./routers/ao3.js";
