@@ -43,6 +43,9 @@ Both scrappers have similar params that you can append as a query string on each
 
 ## Wattpad
 
+The wattpad scrapper can be accessed through `/wattpad` endpoint. The endpoints
+below starts from this endpoint.
+
 ### WattpadStory
 
 When requesting for a story from this endpoint, it will send `JSON` object
@@ -62,7 +65,7 @@ with this schema:
 ### /stories
 
 ```http
-GET {{domain}}/stories?tags=a,b,c
+GET /stories?tags=a,b,c
 ```
 
 Sends an array of up to 10 [WattpadStory](#wattpadstory) containing stories found from
@@ -71,7 +74,7 @@ searching using the `tags` param.
 Example request and response:
 
 ```http
-GET {{wattpad}}/stories?tags=popular
+GET /wattpad/stories?tags=popular
 ```
 
 ```json
@@ -106,6 +109,9 @@ GET {{wattpad}}/stories?tags=popular
 
 ## Ao3
 
+The ao3 scrapper can be accessed through `/ao3` endpoint. The endpoints
+below starts from this endpoint.
+
 ### Ao3Story
 
 When requesting for a story from this endpoint, it will send `JSON` object
@@ -125,7 +131,7 @@ with this schema:
 ### /tags
 
 ```http
-GET {{domain}}/tags?tags=a,b,c
+GET /tags?tags=a,b,c
 ```
 
 Sends an array of up to 10 [Ao3Story](#ao3story) containing stories found from
@@ -134,7 +140,7 @@ searching using the `tags` param.
 Example request and response:
 
 ```http
-GET {{wattpad}}/tags?tags=top,stories
+GET /ao3/tags?tags=top,stories
 ```
 
 ```json
