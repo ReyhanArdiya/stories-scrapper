@@ -51,7 +51,7 @@ below starts from this endpoint.
 When requesting for a story from this endpoint, it will send `JSON` object
 with this schema:
 
-```json
+```js
 {
 	"author": String,
 	"cover": String,
@@ -77,34 +77,34 @@ Example request and response:
 GET /wattpad/stories?tags=popular
 ```
 
-```json
+```js
 [
 	{
-		"author": "Kate Marchant",
-		"cover": "https://img.wattpad.com/cover/890487-144-k595195.jpg",
-		"link": "https://www.wattpad.com/story/890487-float",
-		"reads": 26,
-		"title": "Float",
-		"votes": 585000
+		author: "Kate Marchant",
+		cover: "https://img.wattpad.com/cover/890487-144-k595195.jpg",
+		link: "https://www.wattpad.com/story/890487-float",
+		reads: 26,
+		title: "Float",
+		votes: 585000
 	},
 	{
-		"author": "LOSALINI",
-		"cover": "https://img.wattpad.com/cover/54319053-144-k191036.jpg",
-		"link": "https://www.wattpad.com/story/54319053-best-friend%27s-revenge",
-		"reads": 3,
-		"title": "Best Friend's Revenge",
-		"votes": 124000
+		author: "LOSALINI",
+		cover: "https://img.wattpad.com/cover/54319053-144-k191036.jpg",
+		link: "https://www.wattpad.com/story/54319053-best-friend%27s-revenge",
+		reads: 3,
+		title: "Best Friend's Revenge",
+		votes: 124000
 	},
 	{
-		"author": "Mekayla Pridget",
-		"cover": "https://img.wattpad.com/cover/189015872-144-k888782.jpg",
-		"link": "https://www.wattpad.com/story/189015872-i-accidentally-kissed-my-bestfriends-brother",
-		"reads": 4,
-		"title": "I Accidentally Kissed My Bestfrien...",
-		"votes": 113000
+		author: "Mekayla Pridget",
+		cover: "https://img.wattpad.com/cover/189015872-144-k888782.jpg",
+		link: "https://www.wattpad.com/story/189015872-i-accidentally-kissed-my-bestfriends-brother",
+		reads: 4,
+		title: "I Accidentally Kissed My Bestfrien...",
+		votes: 113000
 	}
 	// ...Up to 10 stories
-]
+];
 ```
 
 ## Ao3
@@ -117,7 +117,7 @@ below starts from this endpoint.
 When requesting for a story from this endpoint, it will send `JSON` object
 with this schema:
 
-```json
+```js
 {
 	"author": String,
 	"bookmarks": Number,
@@ -143,32 +143,32 @@ Example request and response:
 GET /ao3/tags?tags=top,stories
 ```
 
-```json
+```js
 [
 	{
-		"author": "ShootingStar7123",
-		"bookmarks": 49,
-		"hits": 6783,
-		"kudos": 204,
-		"link": "https://archiveofourown.org/works/16349465",
-		"title": "Running Silent"
+		author: "ShootingStar7123",
+		bookmarks: 49,
+		hits: 6783,
+		kudos: 204,
+		link: "https://archiveofourown.org/works/16349465",
+		title: "Running Silent"
 	},
 	{
-		"author": "PsycheStellata707",
-		"bookmarks": 1922,
-		"hits": 219242,
-		"kudos": 7597,
-		"link": "https://archiveofourown.org/works/23679376",
-		"title": "The Darkness Before Dawn"
+		author: "PsycheStellata707",
+		bookmarks: 1922,
+		hits: 219242,
+		kudos: 7597,
+		link: "https://archiveofourown.org/works/23679376",
+		title: "The Darkness Before Dawn"
 	},
 	{
-		"author": "JHSC",
-		"bookmarks": 324,
-		"hits": 9015,
-		"kudos": 850,
-		"link": "https://archiveofourown.org/works/17251004",
-		"title": "For you have returned my soul within me"
+		author: "JHSC",
+		bookmarks: 324,
+		hits: 9015,
+		kudos: 850,
+		link: "https://archiveofourown.org/works/17251004",
+		title: "For you have returned my soul within me"
 	}
 	// ...Up to 10 stories
-]
+];
 ```
