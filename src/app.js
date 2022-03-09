@@ -1,4 +1,6 @@
-import "dotenv/config";
+if (process.env.ENVIRONMENT !== "production") {
+	await import("dotenv/config");
+}
 import ao3Router from "./routers/ao3.js";
 import express from "express";
 import mongoose from "mongoose";
